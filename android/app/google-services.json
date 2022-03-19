@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "271638823977",
+    "project_id": "impactcentrechretienlyon",
+    "storage_bucket": "impactcentrechretienlyon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:271638823977:android:4991fd6806f49df4590838",
+        "android_client_info": {
+          "package_name": "com.egliseicc.lyon.mon_culte"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "271638823977-v6p44rj5aaoo05jumlkhbb0tqrm59asb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZ5nVnmWB298nnYuKcpdtg5W-nU-Vs9j4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "271638823977-v6p44rj5aaoo05jumlkhbb0tqrm59asb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "271638823977-9lktvddcgkbf24dvdkk8pcdpnkf0jkvf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.egliseicc.lyon.monCulte"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
