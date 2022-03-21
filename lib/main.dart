@@ -1,10 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mon_culte/data/repositories/person_repository.dart';
+import 'package:mon_culte/firebase_options.dart';
 import 'package:mon_culte/ui/screens/scanner_code_view.dart';
 
 Future<void> main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const IccLyonApp());
 }
 
@@ -70,11 +75,11 @@ final List<Map<String, dynamic>> cultes = [
 final List<Map<String, dynamic>> personnes = [
   {
     "id": 0,
-    "nom":"GOUALE",
+    "nom": "GOUALE",
     "prénom": "Régi",
     "annéeNaissance": 1993,
-    "sexe":"homme",
-    "mail":"regi.gouale.icc@gmail.com",
+    "sexe": "homme",
+    "mail": "regi.gouale.icc@gmail.com",
   },
   {
     "id": 1,
@@ -134,8 +139,15 @@ class IccLyonApp extends StatelessWidget {
   }
 }
 
-class MonCulte extends StatelessWidget {
+class MonCulte extends StatefulWidget {
   const MonCulte({Key? key}) : super(key: key);
+
+  @override
+  State<MonCulte> createState() => _MonCulteState();
+}
+
+class _MonCulteState extends State<MonCulte> {
+  final PersonRepository personRepository = PersonRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -145,30 +157,35 @@ class MonCulte extends StatelessWidget {
           "Liste des événements",
         ),
       ),
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              title: Text(
-                "${cultes[index]['designation']} du ${cultes[index]['date']}",
-              ),
-              leading: const Icon(Icons.church_rounded),
-              onTap: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => ScannerCodeView(
-                      cultes: cultes,
-                      personnes: personnes,
-                      index: index,
+      body: StreamBuilder<QuerySnapshot>(
+          stream: personRepository.getStream(),
+          builder: (context, snapshot) {
+            return ListView.builder(
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ListTile(
+                    title: Text(
+                      "${cultes[index]['designation']} du ${cultes[index]['date']}",
                     ),
+                    leading: const Icon(Icons.church_rounded),
+                    onTap: () {
+                      print(snapshot.data!.docs);
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ScannerCodeView(
+                            cultes: cultes,
+                            personnes: personnes,
+                            index: index,
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 );
               },
-            ),
-          );
-        },
-        itemCount: cultes.length,
-      ),
+              itemCount: cultes.length,
+            );
+          }),
     );
   }
 }
