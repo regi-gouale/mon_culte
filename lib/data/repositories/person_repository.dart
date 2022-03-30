@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:mon_culte/data/models/person_model.dart';
 
-class DataRepository {
+class PersonRepository {
   final CollectionReference personsRef = FirebaseFirestore.instance
       .collection("persons")
       .withConverter<PersonModel>(
